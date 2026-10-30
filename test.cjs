@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');
+const {growSpecimen}=require('./herbarium.js');
+assert.equal(growSpecimen('moon garden').svg,growSpecimen('moon garden').svg);
+assert.notEqual(growSpecimen('moon garden').svg,growSpecimen('rain garden').svg);
+assert.equal(growSpecimen(' ').seed,'moon garden');
+assert.equal(growSpecimen('x'.repeat(200)).seed.length,80);
+const hostile=growSpecimen('<script>alert("test")</script>').svg;
+assert.ok(!hostile.includes('<script>'));assert.ok(hostile.includes('&lt;script&gt;'));
+for(let i=0;i<100;i++)assert.ok(!/NaN|Infinity|undefined/.test(growSpecimen('garden '+i).svg));
+console.log('PASS: reproducible plants, varied seeds, bounded input and safe SVG export.');
